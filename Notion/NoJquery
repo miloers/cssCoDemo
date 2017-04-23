@@ -1,0 +1,58 @@
+no jquery的技巧 暂时先放这
+
+CSS规则可以像其他属性那样设置。需要注意的是在JavaScript里要写成驼峰形式：
+
+myElement.style.marginLeft = '2em'
+
+如果我们想获得CSS规则的值，我们可以通过.style属性。然而，通过它只能拿到我们明确设置过的样式。想拿到计算后的样式值，我们可以用.window.getComputedStyle()。它可以拿到这个元素并返回一个CSSStyleDeclaration。这个返回值包括了这个元素自己的和继承自父元素的全部样式。
+
+window.getComputedStyle(myElement).getPropertyValue('margin-left')
+
+通过DocumentFragment避免重复渲染
+const fragment = document.createDocumentFragment()
+
+fragment.appendChild(link)
+fragment.appendChilid(hr)
+myElement.appendChild(fragment)
+
+js如何获取json满足特定值的对象
+ d = {
+            "student": [{
+                "count": 1000,
+                "stuList": [{
+                    "name": "张三",
+                    "age": "18",
+                    "address": {
+                        "city": "北京",
+                        "street": "长安街"
+                    }
+                }, {
+                    "name": "李四",
+                    "age": "17",
+                    "address": {
+                        "city": "上海",
+                        "street": "解放路"
+                    }
+                }]
+            }]
+        }
+
+        r = d.student[0].stuList.filter(function(a) {
+            return a.name == '张三';
+        });
+
+        if (typeof Array.prototype.filter != "function") {
+            Array.prototype.filter = function(fn, context) {
+                var arr = [];
+                if (typeof fn === "function") {
+                    for (var k = 0, length = this.length; k < length; k++) {
+                        fn.call(context, this[k], k, this) && arr.push(this[k]);
+                    }
+                }
+                return arr;
+            };
+        }
+        console.dir(r);
+
+
+
